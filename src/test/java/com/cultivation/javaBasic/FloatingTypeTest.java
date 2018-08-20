@@ -63,13 +63,13 @@ class FloatingTypeTest {
     @SuppressWarnings("unused")
     private boolean isNan(double realNumber) {
         // TODO: please implement the method to pass the test.
-        return realNumber != realNumber;
+        return Double.isNaN(realNumber);
     }
 
     @SuppressWarnings("unused")
     private boolean isInfinity(double realNumber) {
         // TODO: please implement the method to pass the test.
-        return realNumber == Double.POSITIVE_INFINITY || realNumber == Double.NEGATIVE_INFINITY;
+        return Double.isInfinite(realNumber);
     }
 
     /*
