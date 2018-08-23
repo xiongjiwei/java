@@ -6,3 +6,8 @@ public class InterfaceWithOverrideDefaultImpl implements InterfaceWithDefaultMet
         return "Anime";
     }
 }
+
+abstract class ii{
+    public abstract void gg();
+    protected abstract void uu();
+}

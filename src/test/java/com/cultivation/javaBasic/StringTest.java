@@ -148,8 +148,6 @@ class StringTest {
             }
             builder.append("\n");
         }
-
-
         // --End-->
 
         final String expected =

@@ -26,7 +26,10 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {"SuperClassWithDefaultConstructor.constructor()", "DerivedFromSuperClassWithDefaultConstructor.constructor()"};
+        final String[] expected = {
+                "SuperClassWithDefaultConstructor.constructor()",
+                "DerivedFromSuperClassWithDefaultConstructor.constructor()"
+        };
         // --end-->
 
         String[] logs = instance.getLogs();
@@ -40,7 +43,11 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {"SuperClassWithDefaultConstructor.constructor()", "DerivedFromSuperClassWithDefaultConstructor.constructor()", "DerivedFromSuperClassWithDefaultConstructor.constructor(int)"};
+        final String[] expected = {
+                "SuperClassWithDefaultConstructor.constructor()",
+                "DerivedFromSuperClassWithDefaultConstructor.constructor()",
+                "DerivedFromSuperClassWithDefaultConstructor.constructor(int)"
+        };
         // --end-->
 
         String[] logs = instance.getLogs();
@@ -54,7 +61,10 @@ class InheritanceTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {"SuperClassWithDefaultConstructor.constructor(String)", "DerivedFromSuperClassWithDefaultConstructor.constructor(String)"};
+        final String[] expected = {
+                "SuperClassWithDefaultConstructor.constructor(String)",
+                "DerivedFromSuperClassWithDefaultConstructor.constructor(String)"
+        };
         // --end-->
 
         String[] logs = instance.getLogs();
@@ -90,7 +100,7 @@ class InheritanceTest {
     @Test
     void should_use_caution_when_dealing_with_array_type() {
         DerivedFromSuperClassWithDefaultConstructor[] array = new DerivedFromSuperClassWithDefaultConstructor[4];
-        SuperClassWithDefaultConstructor[] arrayWithBaseType = (SuperClassWithDefaultConstructor[])array;
+        SuperClassWithDefaultConstructor[] arrayWithBaseType = array;
 
         boolean willThrow = false;
 
@@ -106,6 +116,14 @@ class InheritanceTest {
         // --end-->
 
         assertEquals(expected.get(), willThrow);
+    }
+
+    @Test
+    void SuperToSub() {
+        SuperClassWithDefaultConstructor superClassInstance = new SuperClassWithDefaultConstructor();
+        DerivedFromSuperClassWithDefaultConstructor subClassInstance = (DerivedFromSuperClassWithDefaultConstructor) superClassInstance;
+
+        subClassInstance.toString();
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
