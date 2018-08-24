@@ -5,16 +5,13 @@ import com.cultivation.javaBasic.util.MethodWithAnnotation;
 import com.cultivation.javaBasic.util.MyAnnotation;
 import org.junit.jupiter.api.Test;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ReflectionTest {
     @Test
@@ -137,34 +134,18 @@ class ReflectionTest {
     }
 
     @Test
-    void get_private_method() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        assertEquals("MyClass Name", invokeMethod("getName"));
-//        assertEquals(30, invokeMethod("getAge"));
-        assertEquals("MyName", invokeMethod("getName", "MyName"));
-    }
-
-    private Object invokeMethod(String methodName, Object... args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void should_get_annotation() {
         Class<MyClass> myClassClass = MyClass.class;
-        Method declaredMethod = myClassClass.getDeclaredMethod(methodName, String.class);
-        MyClass obj = new MyClass();
-        Object invoke = declaredMethod.invoke(obj, args);
-        return invoke;
+
+        assertNull(myClassClass.getDeclaredMethods()[0].getAnnotation(SuppressWarnings.class));
     }
 
 }
 
 class MyClass{
-
-//    public String getName(){
-//        return "MyClass Name";
-//    }
-
-    public int getAge(){
-        return 30;
-    }
-
+    @SuppressWarnings("unused")
     public String getName(String name){
-        return name;
+        return null;
     }
 }
 

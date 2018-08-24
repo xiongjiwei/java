@@ -23,13 +23,21 @@ public class Sequence implements Iterable<Integer> {
 class SequenceIterator implements Iterator<Integer> {
     // TODO: You can add additional fields or methods if you want.
     // <--start
-
+    private int[] value;
+    private int length;
+    private int curValue = 0;
     // --end-->
 
     SequenceIterator(Integer start, Integer end) {
         // TODO: please implements the following code to pass the test
         // <--start
-        throw new NotImplementedException();
+        value = new int[end - start];
+        length = end - start;
+        int tmpValue = start;
+
+        for (;tmpValue < end; tmpValue++) {
+            value[tmpValue - start] = tmpValue;
+        }
         // --end-->
     }
 
@@ -37,7 +45,7 @@ class SequenceIterator implements Iterator<Integer> {
     public boolean hasNext() {
         // TODO: please implements the following code to pass the test
         // <--start
-        throw new NotImplementedException();
+        return curValue < length;
         // --end-->
     }
 
@@ -45,7 +53,7 @@ class SequenceIterator implements Iterator<Integer> {
     public Integer next() {
         // TODO: please implements the following code to pass the test
         // <--start
-        throw new NotImplementedException();
+        return value[curValue++];
         // --end-->
     }
 }

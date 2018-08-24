@@ -1,9 +1,15 @@
 package com.cultivation.javaBasic;
 
-import com.cultivation.javaBasic.util.*;
+import com.cultivation.javaBasic.util.GenericFunc;
+import com.cultivation.javaBasic.util.StringFunc;
+import com.cultivation.javaBasic.util.ThisInClosure;
+import com.cultivation.javaBasic.util.ValueHolder;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,7 +42,7 @@ class LambdaTest {
     void should_be_able_to_bind_to_static_method() {
         // TODO: please bind lambda to staticMethod
         // <--start
-        StringFunc lambda = () -> "staticMethod";
+        StringFunc lambda = LambdaTest::staticMethod;
         // --end-->
 
         assertEquals("staticMethod", lambda.getString());
@@ -50,22 +56,36 @@ class LambdaTest {
         GenericFunc<ArrayList<Integer>> lambda = ArrayList::new;
         // --end-->
 
+        Supplier<Object> objectSupplier = Object::new;
+
         ArrayList<Integer> value = lambda.getValue();
 
+        assertEquals(Object.class, objectSupplier.get().getClass());
         assertEquals(0, value.size());
     }
 
     @Test
-    void should_capture_variable_in_a_closure() {
+    void should_capture_variable_in_a_closure() throws IllegalAccessException {
         int captured = 5;
+        int test = 10;
 
-        StringFunc lambda = () -> captured + " has been captured.";
+        StringFunc lambda = () -> test + captured + " has been captured.";
+
+        Field[] declaredFields = lambda.getClass().getDeclaredFields();
+
+        for (Field field : declaredFields) {
+            field.setAccessible(true);
+            System.out.println(field.getName());
+            System.out.println(Modifier.isFinal(field.getModifiers()));
+            System.out.println(Modifier.isPrivate(field.getModifiers()));
+            System.out.println(field.get(lambda));
+        }
 
         final String message = lambda.getString();
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String expected = "5 has been captured.";
+        final String expected = "7 has been captured.";
         // --end-->
 
         assertEquals(expected, message);

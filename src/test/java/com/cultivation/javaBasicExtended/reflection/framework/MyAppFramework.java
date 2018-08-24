@@ -13,7 +13,7 @@ public class MyAppFramework {
     public void registerController(Class controllerClazz) {
         // TODO: Please implement the method
         // <--start
-        if (controllerMap.containsKey(controllerClazz.getName())) {
+        if (controllerClazz == null || controllerMap.containsKey(controllerClazz.getName())) {
             throw new IllegalArgumentException();
         }
 
@@ -21,7 +21,7 @@ public class MyAppFramework {
         // --end-->
     }
 
-    public Response getResponse(String requestController, String requestMethod) throws InstantiationException {
+    public Response getResponse(String requestController, String requestMethod) {
         // TODO: Please implement the method
         // <--start
         Class<?> controller = getControllerClass(requestController);
@@ -32,10 +32,13 @@ public class MyAppFramework {
                 return getResponse(result);
             } catch (NoSuchMethodException e) {
                 return getResponseWhenNoSuchMethod(requestMethod, controller);
-            } catch (InvocationTargetException e) {
-                return new Response(500);
             } catch (IllegalAccessException e) {
                 return new Response(403);
+            } catch (InvocationTargetException e) {
+                Throwable t = e.getTargetException();
+                return new Response(t.getMessage(), 500);
+            } catch (Exception e) {
+                return new Response(500);
             }
         }
 

@@ -29,7 +29,9 @@ class CollectionsTest {
         // TODO: you could ONLY use `Iterator.hasNext` and `Iterator.next` API to copy items to a `List`. No `for` is
         // allowed.
         // <--start
-
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
         // --end-->
 
         return list;
@@ -57,7 +59,7 @@ class CollectionsTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final List<String> expected = Arrays.asList("I", "Don't", "Know");
+        final List<String> expected = Arrays.asList("Amy", "Bob", "Carl");
         // --end-->
 
         assertIterableEquals(expected, staff);
@@ -71,7 +73,8 @@ class CollectionsTest {
             oneGagaChars,
             new Character[]{'a', 'b'});
 
-        List<Character> distinct = new DistinctIterable<>(characters).toList();
+        DistinctIterable<Character> characters1 = new DistinctIterable<>(characters);
+        List<Character> distinct = characters1.toList();
         distinct.sort(Character::compareTo);
 
         assertIterableEquals(Arrays.asList('a', 'b'), distinct);
@@ -89,7 +92,7 @@ class CollectionsTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final List<Integer> expected = Arrays.asList(0, 0, 0);
+        final List<Integer> expected = Arrays.asList(0, 1, 2, 10, 11);
         // --end-->
 
         assertIterableEquals(expected, integers);
