@@ -2,8 +2,7 @@ package com.cultivation.javaBasicExtended.matrixMultiplication;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixTest {
     @Test
@@ -70,6 +69,37 @@ class MatrixTest {
         assertThrows(
             IllegalArgumentException.class,
             () -> Matrix.multiply(new Matrix(left), new Matrix(right)));
+    }
+
+    @Test
+    void should_clone_1domin() {
+        int left[] = {3,2,3};
+        int[] clone = left.clone();
+        clone[0] = 2;
+        assertEquals(3, left[0]);
+        assertEquals(2, clone[0]);
+
+
+
+        String[] strings = {"H", "W"};
+        String[] stringsClone = strings.clone();
+
+        assertNotSame(strings, stringsClone);
+        assertSame(strings[0], stringsClone[0]);
+    }
+
+    @Test
+    void should_clone_matrix() {
+        int left[][] = { {3,2,3}, {5,9,8} };
+
+        int[][] clone = left.clone();
+        assertNotEquals(clone, left);
+        for (int i = 0; i < left.length; i++) {
+            for (int j = 0; j < left[i].length; j++) {
+                assertEquals(left[i][j], clone[i][j]);
+            }
+            assertSame(left[i], clone[i]);
+        }
     }
 
     @Test

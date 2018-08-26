@@ -8,7 +8,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class CollectionsTest {
     @Test
@@ -40,6 +42,12 @@ class CollectionsTest {
     @Test
     void should_create_a_sequence_without_putting_all_items_into_memory() {
         Sequence sequence = new Sequence(4, 10);
+        List<Integer> log = new ArrayList<>();
+
+        for (Integer integer : sequence) {
+            log.add(integer);
+        }
+
         assertIterableEquals(Arrays.asList(4, 5, 6, 7, 8, 9), sequence);
     }
 
@@ -78,6 +86,19 @@ class CollectionsTest {
         distinct.sort(Character::compareTo);
 
         assertIterableEquals(Arrays.asList('a', 'b'), distinct);
+    }
+
+    @Test
+    void test() {
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        String str1 = "Hello";
+        String str2 = new String("Hello");
+        String str3 = "Hello";
+
+
+        assertSame(str3, str1);
     }
 
     @Test

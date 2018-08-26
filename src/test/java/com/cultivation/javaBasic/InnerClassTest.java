@@ -28,17 +28,12 @@ class InnerClassTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     void should_refer_inner_class_from_outside() {
-        InnerClassUpdateField instance = new InnerClassUpdateField();
+        InnerClassUpdateField innerClassUpdateField = new InnerClassUpdateField();
+        InnerClassUpdateField.YearIncrementer yearIncrementer = innerClassUpdateField.new YearIncrementer();
 
-        InnerClassUpdateField.YearIncrementer incrementer = instance.new YearIncrementer();
-        incrementer.increment();
+        yearIncrementer.increment();
 
-        // TODO: please modify the following code to pass the test
-        // <--start
-        final Optional<Integer> expected = Optional.of(2019);
-        // --end-->
-
-        assertEquals(expected.get().intValue(), instance.getYear());
+        assertEquals(2019, innerClassUpdateField.getYear());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -72,7 +67,10 @@ class InnerClassTest {
     @Test
     void should_create_instance_for_static_inner_class() {
         StaticInnerClass instance = new StaticInnerClass();
+
         StaticInnerClass.Inner inner = instance.createInner();
+
+        StaticInnerClass.Inner inner1 = new StaticInnerClass.Inner("World");
 
         // TODO: please modify the following code to pass the test
         // <--start
@@ -80,5 +78,6 @@ class InnerClassTest {
         // --end-->
 
         assertEquals(expected, inner.getName());
+        assertEquals("World", inner1.getName());
     }
 }

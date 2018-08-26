@@ -9,6 +9,8 @@ public class KeyValuePair<TKey, TValue> {
         this.value = value;
     }
 
+    public KeyValuePair() {}
+
     public TKey getKey() {
         return key;
     }
