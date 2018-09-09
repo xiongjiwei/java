@@ -20,9 +20,6 @@ public class AnonymousClassUpdateField {
             }
         };
 
-        Runnable increments = () -> year++;
-        increments.run();
-
         increment.run();
     }
 }

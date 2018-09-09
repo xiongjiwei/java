@@ -10,4 +10,12 @@ public class ValueHolder<T> {
     public void setValue(T value) {
         this.value = value;
     }
+
+    public ValueHolder(T value) {
+        this.value = value;
+    }
+
+    public ValueHolder() {
+
+    }
 }

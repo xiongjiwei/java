@@ -11,17 +11,16 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExceptionTest {
     @Test
     void should_customize_exception() {
         try {
-            throw new StringFormatException("the message");
-        } catch (StringFormatException error) {
-            assertEquals("the message", error.getMessage());
+            throw new StringFormatException("error message");
+        } catch (StringFormatException e) {
+            assertEquals("error message", e.getMessage());
+            assertNull(e.getCause());
         }
     }
 
@@ -53,9 +52,14 @@ class ExceptionTest {
     @Test
     void should_use_the_try_pattern() {
         ClosableStateReference closableStateReference = new ClosableStateReference();
+        MyClosableType willClose = null;
         try (MyClosableType closable = new MyClosableType(closableStateReference))
         {
             assertFalse(closable.isClosed());
+            willClose = closable;
+            throw new StringFormatException("sf");
+        } catch (Exception e) {
+            assertTrue(willClose.isClosed());
         }
 
         // TODO: please modify the following code to pass the test
@@ -68,7 +72,7 @@ class ExceptionTest {
 
     @SuppressWarnings({"EmptyTryBlock", "unused"})
     @Test
-    void should_call_closing_even_if_exception_throws() throws Exception {
+    void should_call_closing_even_if_exception_throws() {
         ArrayList<String> logger = new ArrayList<>();
 
         try {
@@ -81,12 +85,10 @@ class ExceptionTest {
 
         // TODO: please modify the following code to pass the test
         // <--start
-        final String[] expected = {};
+        final String[] expected = {"ClosableWithException.close", "ClosableWithoutException.close"};
         // --end-->
 
-        assertArrayEquals(
-            expected,
-            logger.toArray());
+        assertArrayEquals(expected, logger.toArray());
     }
 
     @Test
@@ -101,9 +103,9 @@ class ExceptionTest {
     @SuppressWarnings({"ReturnInsideFinallyBlock", "SameParameterValue"})
     private int confuse(int value) {
         try {
-            return value * value;
+            throw new NullPointerException();
         } finally {
-            if (value == 2) {
+            if (value == 3) {
                 return 0;
             }
         }

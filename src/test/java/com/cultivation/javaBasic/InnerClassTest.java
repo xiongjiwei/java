@@ -14,26 +14,44 @@ class InnerClassTest {
     @SuppressWarnings("ConstantConditions")
     @Test
     void should_access_instance_field_of_parent_class() {
-        InnerClassUpdateField instance = new InnerClassUpdateField();
-        instance.somethingHappen();
 
-        // TODO: please modify the following code to pass the test
-        // <--start
-        final Optional<Integer> expected = Optional.of(2019);
-        // --end-->
-
-        assertEquals(expected.get().intValue(), instance.getYear());
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test
     void should_refer_inner_class_from_outside() {
-        InnerClassUpdateField innerClassUpdateField = new InnerClassUpdateField();
-        InnerClassUpdateField.YearIncrementer yearIncrementer = innerClassUpdateField.new YearIncrementer();
+        InnerClassUpdateField innerClassUpdateField = new InnerClassUpdateField(2018);
+        InnerClassUpdateField.InnerClass innerClass = innerClassUpdateField.new InnerClass();
 
-        yearIncrementer.increment();
+        innerClass.increment();
 
         assertEquals(2019, innerClassUpdateField.getYear());
+    }
+
+    @Test
+    void should_increment_from_constructor() {
+        InnerClassUpdateField innerClassUpdateField = new InnerClassUpdateField(2018);
+        InnerClassUpdateField.InnerClass innerClass = innerClassUpdateField.new InnerClass(2);
+
+        assertEquals(2020, innerClassUpdateField.getYear());
+    }
+
+    @Test
+    void should_increment_after_run_add() {
+        InnerClassUpdateField innerClassUpdateField = new InnerClassUpdateField(2018);
+        InnerClassUpdateField.InnerClass innerClass = innerClassUpdateField.new InnerClass(2);
+
+        innerClass.add();
+
+        assertEquals(2020, innerClassUpdateField.getYear());
+    }
+
+    @Test
+    void should_add_from_out_class() {
+        InnerClassUpdateField innerClassUpdateField = new InnerClassUpdateField(2018);
+        innerClassUpdateField.add(2);
+
+        assertEquals(2020, innerClassUpdateField.getYear());
     }
 
     @SuppressWarnings("ConstantConditions")

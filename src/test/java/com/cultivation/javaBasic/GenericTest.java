@@ -90,8 +90,7 @@ class GenericTest {
     @SuppressWarnings("unused")
     private static <T extends Number & Comparable<T>> T min(T[] values) {
         T min = values[0];
-        for (T t :
-                values) {
+        for (T t : values) {
             if (min.compareTo(t) > 0) {
                 min = t;
             }
